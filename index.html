@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Reto Marte | Proyectos Tecnologicos Estudiantiles</title>
+  <link rel="icon" href="img/UNACHm.png" type="image/png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Michroma&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css?v=20260701-institution-form" />
+</head>
+<body>
+  <header class="site-header" aria-label="Navegacion principal">
+    <a class="brand brand-logos" href="#inicio" aria-label="Logos UNACH, Marca UNACH, Ignite y Mars Challenge"><img class="brand-logo brand-logo-unach" src="img/UNACH.png" alt="UNACH" /><img class="brand-logo brand-logo-marca" src="img/marcaunach.png" alt="Marca UNACH" /><img class="brand-logo brand-logo-ignite" src="img/ignite.png" alt="Ignite" /><img class="brand-logo brand-logo-mars" src="img/mars.png" alt="Mars Challenge" /></a>
+    <nav class="nav-links" aria-label="Secciones"><a href="#inicio">Inicio</a><a href="#reto">Reto</a><a href="#participacion">Participacion</a><a href="#misiones">Requisitos</a><a href="#programa">Ruta</a><a href="#registro">Registro</a></nav>
+  </header>
+  <main>
+    <section class="hero" id="inicio">
+      <img class="hero-bg" src="assets/marte.png" alt="Planeta Marte realista visto desde el espacio" />
+      <canvas class="hero-canvas" id="heroCanvas" aria-hidden="true"></canvas>
+      <div class="hero-grid" aria-hidden="true"></div>
+      <div class="hero-shade" aria-hidden="true"></div>
+      <img class="hero-astronaut" src="assets/astronauta-hero.png" alt="Astronauta futurista explorando Marte" />
+      <div class="orbital-ring ring-one" aria-hidden="true"></div>
+      <div class="orbital-ring ring-two" aria-hidden="true"></div>
+      <div class="hero-content">
+        <p class="eyebrow">Hackatón Mars Challenge™</p>
+        <h1><span>Reto</span><span>Marte</span></h1>
+        <p class="hero-year">UNACH 2026</p>
+        <p class="hero-copy">Mars Challenge™ es un programa internacional que usa el contexto de Marte (recursos limitados y condiciones extremas) para retar a jóvenes a diseñar soluciones que también se puedan aplicar en la Tierra.<br />Durante el hackatón trabajarás en el desafío oficial de esta edición. Los detalles se compartirán por la organización el día del evento.</p>
+        <div class="hero-actions"><a class="button secondary" href="#registro">Enlístate a la misión</a></div>
+      </div>
+      <aside class="hero-sidebar" aria-label="Panel lateral">
+        <div class="mission-panel" aria-label="Estado de la mision"><p class="event-date-inline"><span>Fecha del evento</span><strong>8 y 9 de septiembre de 2026</strong></p><div class="panel-header"><span class="pulse"></span><span>Transmision activa</span></div><dl class="telemetry"><div><dt>Equipos</dt><dd>30</dd></div><div><dt>Integrantes / equipo</dt><dd>6</dd></div><div><dt>Objetivo</dt><dd>Habitar</dd></div></dl>
+        <div class="launch-window">
+          <span>Ventana de lanzamiento</span>
+          <div class="countdown-row">
+            <svg class="clock-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <polyline points="12 6 12 12 16 14"></polyline>
+            </svg>
+            <strong id="countdown">RM-0000:00:00</strong>
+          </div>
+          <small id="signalText">Cuenta regresiva rumbo al evento</small>
+        </div></div>
+        <div class="video-panel" id="videoPanel">
+          <div class="video-placeholder" id="videoPlaceholder">
+            <img src="https://img.youtube.com/vi/-vbRyDh8xpo/hqdefault.jpg" alt="Video" />
+            <button class="video-play-btn" aria-label="Reproducir video">
+              <span class="video-play-icon"></span>
+            </button>
+          </div>
+        </div>
+      </aside>
+    </section>
+    <section class="intro-band" id="reto" aria-label="Resumen del evento">
+      <div class="intro-header">
+        <p class="eyebrow">EL RETO: Elemento Tierra</p>
+        <h2>Reto especifico: La Tierra como un sistema vivo</h2>
+        <p>Diseñar un sistema vivo integrado donde diferentes formas de vida interactúen en equilibrio. La propuesta debe incluir al menos tres componentes biológicos conectados entre sí.</p>
+      </div>
+      <div class="intro-item"><span>01</span><strong>Investigar</strong><p>Comprender problemas reales de energia, agua, comunicacion, salud y movilidad marciana.</p></div>
+      <div class="intro-item"><span>02</span><strong>Construir</strong><p>Convertir una idea en prototipo con sensores, software, materiales, IA o electronica.</p></div>
+      <div class="intro-item"><span>03</span><strong>Presentar</strong><p>Defender el proyecto ante jurado con evidencia, demostracion funcional e impacto esperado.</p></div>
+    </section>
+    <section class="steam-white-section" id="participacion" aria-label="STEAM"><div class="steam-copy"><p class="eyebrow">Participacion</p><h2>¿Quién puede participar?</h2><p>Estudiantes de cualquier licenciatura de la UNACH. El Hackatón Reto Marte promueve el enfoque STEAM (Ciencia, Tecnología, Ingeniería, Arte y Matemáticas), donde la innovación surge del trabajo multidisciplinario. No importa tu carrera: si tienes creatividad, ideas y ganas de resolver desafíos reales, este reto es para ti.</p></div><img class="steam-white-image" src="img/steam2.png" alt="STEAM" /></section>
+    <section class="section participation-rules" id="misiones">
+      <div class="rules-content">
+        <p class="eyebrow">Requisitos de participación</p>
+        <h2>¿Quiénes NO pueden participar?</h2>
+        <div class="meteor-hero" aria-hidden="true"><span class="meteor-dust dust-one"></span><span class="meteor-dust dust-two"></span><span class="meteor-dust dust-three"></span><span class="meteor-dust dust-four"></span><span class="meteor-glow"></span><img class="meteor-img" src="img/meteorito.png" alt="" /></div>
+        <div class="rules-text">
+          <div class="rules-block rules-block-denied"><ul><li>Personas con título concluido de maestría, especialidad o posgrado equivalente.</li><li>Personas que estén cursando una segunda licenciatura/grado cuando ya concluyeron antes una carrera equivalente (salvo excepciones validadas según normativa aplicable).</li><li>Estudiantes que no cumplan las reglas de composición STEAM+</li></ul></div>
+          <div class="rules-block rules-block-mode"><h3>Modalidad de participación</h3><p><strong>Presencial por equipos</strong></p></div>
+          <div class="rules-block rules-block-work"><h3>¿Qué tendrás que hacer durante el hackatón?</h3><ul><li>Desarrollar una propuesta original.</li><li>Preparar una presentación breve (pitch) en el formato y tiempo que indique la organización.</li><li>Cumplir entregables y reglas del evento.</li></ul></div>
+          <div class="rules-block rules-block-tools"><h3>Uso responsable de herramientas (incluida IA)</h3><p>Se permite usar herramientas digitales como apoyo, incluyendo inteligencia artificial, siempre que:</p><ul><li>No sustituyan el trabajo real del equipo.</li><li>No haya plagio ni copia de proyectos de terceros.</li><li>Se respete la autoría y los derechos de otras personas.</li></ul></div>
+        </div>
+      </div>
+    </section>
+    <section class="section timeline-section" id="programa">
+      <canvas class="mars3d-canvas" id="mars3dCanvas" aria-hidden="true"></canvas>
+      <div class="mars3d-stars" aria-hidden="true"></div>
+      <img class="program-satellite" src="assets/satelite.png" alt="Satelite orbitando Marte" />
+      <div class="section-heading">
+        <p class="eyebrow">Ruta de lanzamiento</p>
+        <h2>Del boceto al prototipo funcional</h2>
+      </div>
+      <div class="timeline">
+        <article><span>Etapa 1</span><h3>Ideacion</h3><p>Equipos de 6 estudiantes eligen una mision y definen el problema que resolveran.</p></article>
+        <article><span>Etapa 2</span><h3>Laboratorio</h3><p>Construccion del prototipo, pruebas tecnicas, bitacora y primera presentacion corta.</p></article>
+        <article><span>Etapa 3</span><h3>Simulacion Marte</h3><p>Demostracion frente a condiciones simuladas: polvo, baja energia, retraso de comunicacion o recursos limitados.</p></article>
+        <article><span>Etapa 4</span><h3>Pitch final</h3><p>Presentacion de 5 minutos, defensa con jurado y exhibicion abierta de proyectos.</p></article>
+        <article><span>Etapa 5</span><h3>Evaluación</h3><p>Selección de tres finalistas.</p></article>
+      </div>
+    </section>
+    <section class="registration" id="registro">
+      <div class="registration-intro">
+        <p class="eyebrow">Centro de control</p>
+        <h2>Activa tu mision escolar</h2>
+        <p>Registra tu equipo y comienza el desafio. Completa la informacion requerida para formalizar tu participacion en el Reto Marte.</p>
+      </div>
+      <form class="signup-form institution-form" method="post" action="api/register_participant.php" enctype="multipart/form-data" novalidate>
+        <section class="institution-selector" aria-label="Filtro institucional">
+          <h3>¿De que institucion provienes?</h3>
+          <div class="institution-options">
+            <button class="institution-card" type="button" data-institution="unach" aria-pressed="false" aria-label="UNACH"><img class="institution-logo" src="img/UNACHm.png" alt="UNACH" /></button>
+            <button class="institution-card" type="button" data-institution="cobach" aria-pressed="false" aria-label="COBACH"><img class="institution-logo" src="img/cobach.png" alt="COBACH" /></button>
+          </div>
+        </section>
+        <div class="institution-empty" id="institutionEmpty"><p>Selecciona tu institucion para mostrar las preguntas correspondientes.</p></div>
+        <section class="institution-panel" data-panel="unach" hidden>
+          <div class="panel-heading"><p class="panel-kicker">Formulario UNACH</p><h3>Datos para estudiantes de UNACH</h3></div>
+          <div class="step-grid cols-2">
+            <label><span class="field-label">Unidad academica</span><select name="unach_unit"><option value="">Selecciona una unidad academica</option><option>ESCUELA DE ESTUDIOS AGROPECUARIOS MEZCALAPA</option><option>FACULTAD MAYA DE ESTUDIOS AGROPECUARIOS</option><option>FACULTAD DE CONTADURIA Y ADMINISTRACION  C-I</option><option>FACULTAD DE INGENIERIA  C-I</option><option>FACULTAD DE ARQUITECTURA  C-I</option><option>ESCUELA DE CONTADURIA Y ADMINISTRACION PICHUCALCO  C-VII</option><option>FACULTAD DE CIENCIAS EN FISICA Y MATEMATICAS</option><option>ESCUELA DE CIENCIAS QUIMICAS</option><option>ESCUELA DE TECNOLOGIAS DIGITALES APLICADAS  CAMPUS I</option><option>FACULTAD DE CONTADURIA Y ADMINISTRACION  C.I EXT BERRIOZABAL</option><option>ESCUELA DE CIENCIAS ADMINISTRATIVAS ISTMO-COSTA TONALA  C-IX</option><option>ESCUELA DE CIENCIAS ADMINISTRATIVAS ARRIAGA  C-IX</option><option>ESCUELA DE SISTEMAS ALIMENTARIOS</option><option>CENTRO MESOAMERICANO FISICA TEORICA</option><option>CENTRO DE TRANSFERENCIA TECNOLOGICA Y DESARROLLO SOSTENIBLE DE LA UNIVERSIDAD AUTONOMA DE CHIAPAS</option><option>FACULTAD DE CIENCIAS DE LA ADMINISTRACION  C.IV EXT CACAHOATAN</option><option>FACULTAD DE MEDICINA VETERINARIA Y ZOOTECNIA  C-II EXTENSION PICHUCALCO</option><option>FACULTAD DE MEDICINA VETERINARIA Y ZOOTECNIA  C-II</option><option>FACULTAD DE CIENCIAS QUIMICAS  C-IV</option><option>FACULTAD DE CIENCIAS AGRICOLAS  C-IV</option><option>FACULTAD DE NEGOCIOS  C-IV</option><option>FACULTAD DE CIENCIAS AGRONOMICAS  C-V</option><option>INSTITUTO DE BIOCIENCIAS  C-IV</option><option>FACULTAD DE CIENCIAS DE LA ADMINISTRACION  C-IV</option><option>ESCUELA DE TECNOLOGIAS DIGITALES APLICADAS  CAMPUS IV</option><option>CENTRO DE INVESTIGACION DE LOS SISTEMAS COSTEROS Y CONTINENTALES</option><option>ESCUELA DE CIENCIAS Y PROCESOS AGROPECUARIOS INDUSTRIALES ISTMO COSTA  C-IX ARRIAGA</option><option>COORDINACION DE LA LICENCIATURA EN CAFICULTURA</option><option>FACULTAD DE ESTUDIOS MULTIDISCIPLINARIOS  CAMPUS COMITAN</option></select></label>
+            <label><span class="field-label">Semestre</span><select name="unach_semester"><option value="">Selecciona semestre</option><option>I</option><option>II</option><option>III</option><option>IV</option><option>V</option><option>VI</option><option>VII</option><option>VIII</option><option>IX</option></select></label>
+            <label class="full"><span class="field-label">Carrera</span><input type="text" name="unach_major" placeholder="Escribe tu carrera" /></label>
+            <label><span class="field-label">Nombre(s)</span><input type="text" name="unach_first_name" placeholder="Nombre(s)" /></label>
+            <label><span class="field-label">Apellido paterno</span><input type="text" name="unach_last_name_1" placeholder="Apellido paterno" /></label>
+            <label><span class="field-label">Apellido materno</span><input type="text" name="unach_last_name_2" placeholder="Apellido materno" /></label>
+            <div class="inline-field-group">
+              <label><span class="field-label">Fecha de nacimiento</span><input type="date" name="unach_birthdate" data-age-target="unach_age" /></label>
+              <label class="age-field"><span class="field-label">Edad</span><input type="text" name="unach_age" placeholder="Edad" readonly /></label>
+            </div>
+            <label><span class="field-label">Sexo</span><select name="unach_gender"><option value="">Selecciona</option><option>Masculino</option><option>Femenino</option><option>Prefiero no decirlo</option></select></label>
+            <label><span class="field-label">CURP</span><input type="text" name="unach_curp" maxlength="18" placeholder="18 caracteres" /></label>
+            <label><span class="field-label">Correo electronico</span><input type="email" name="unach_email" placeholder="correo@ejemplo.com" /></label>
+            <label><span class="field-label">Numero de telefono celular</span><input type="tel" name="unach_phone" placeholder="961 123 4567" /></label>
+            <label><span class="field-label">Estado</span><input type="text" name="unach_state" placeholder="Estado" /></label>
+            <label><span class="field-label">Municipio</span><input type="text" name="unach_city" placeholder="Municipio" /></label>
+          </div>
+        </section>
+        <section class="institution-panel" data-panel="cobach" hidden>
+          <div class="panel-heading"><p class="panel-kicker">Formulario COBACH</p><h3>Datos para estudiantes de COBACH</h3></div>
+          <div class="step-grid cols-2">
+            <label><span class="field-label">Plantel</span><select name="cobach_campus"><option value="">Selecciona un plantel</option><option>Plantel 01 Tuxtla Terán</option><option>Plantel 13 Tuxtla Oriente</option><option>Plantel 33 Polyforum</option><option>Plantel 35 Tuxtla Norte</option><option>Plantel 145 Tuxtla Sur</option><option>Plantel 234 Tuxtla Plan de Ayala</option><option>Plantel 236 Tuxtla Poniente</option></select></label>
+            <label><span class="field-label">Semestre</span><select name="cobach_semester"><option value="">Selecciona semestre</option><option>I</option><option>II</option><option>III</option><option>IV</option><option>V</option><option>VI</option></select></label>
+            <label class="full"><span class="field-label">Area de formacion</span><select name="cobach_area"><option value="">Selecciona un area</option><option>Administración</option><option>Contabilidad</option><option>Informática</option><option>Programación</option><option>Tecnologías de la Información y la Comunicación (TIC)</option><option>Recursos Humanos</option><option>Higiene y Salud Comunitaria</option><option>Desarrollo Comunitario</option><option>Laboratorista Químico</option><option>Turismo</option></select></label>
+            <label><span class="field-label">Nombre(s)</span><input type="text" name="cobach_first_name" placeholder="Nombre(s)" /></label>
+            <label><span class="field-label">Apellido paterno</span><input type="text" name="cobach_last_name_1" placeholder="Apellido paterno" /></label>
+            <label><span class="field-label">Apellido materno</span><input type="text" name="cobach_last_name_2" placeholder="Apellido materno" /></label>
+            <div class="inline-field-group">
+              <label><span class="field-label">Fecha de nacimiento</span><input type="date" name="cobach_birthdate" data-age-target="cobach_age" /></label>
+              <label class="age-field"><span class="field-label">Edad</span><input type="text" name="cobach_age" placeholder="Edad" readonly /></label>
+            </div>
+            <label><span class="field-label">Sexo</span><select name="cobach_gender"><option value="">Selecciona</option><option>Masculino</option><option>Femenino</option><option>Prefiero no decirlo</option></select></label>
+            <label><span class="field-label">CURP</span><input type="text" name="cobach_curp" maxlength="18" placeholder="18 caracteres" /></label>
+            <label><span class="field-label">Correo electronico</span><input type="email" name="cobach_email" placeholder="correo@ejemplo.com" /></label>
+            <label><span class="field-label">Numero de telefono celular</span><input type="tel" name="cobach_phone" placeholder="961 123 4567" /></label>
+            <label><span class="field-label">Estado</span><input type="text" name="cobach_state" placeholder="Estado" /></label>
+            <label><span class="field-label">Municipio</span><input type="text" name="cobach_city" placeholder="Municipio" /></label>
+            <label class="full upload-field"><span class="field-label">Adjuntar carta responsiva (PDF, max. 1 MB)</span><input type="file" name="cobach_responsiva" accept="application/pdf" /></label>
+            <label class="full upload-field"><span class="field-label">Adjuntar certificado de estudios (PDF, max. 1 MB)</span><input type="file" name="cobach_certificado" accept="application/pdf" /></label>
+          </div>
+        </section>
+        <div class="form-submit-row"><button class="button primary institution-submit" type="submit"><span>Inicializar mision</span></button></div>
+      </form>
+    </section>
+  </main>
+  <footer class="footer"><span>Reto Marte</span><span>Proyectos tecnologicos estudiantiles para imaginar el futuro fuera de la Tierra.</span></footer>
+
+  <div class="app-dialog" id="appDialog" hidden>
+    <div class="app-dialog__backdrop" data-close-dialog="true"></div>
+    <section class="app-dialog__card" role="dialog" aria-modal="true" aria-labelledby="appDialogTitle" aria-describedby="appDialogMessage">
+      <div class="app-dialog__header">
+        <span class="app-dialog__status-dot" aria-hidden="true"></span>
+        <h3 id="appDialogTitle">Aviso</h3>
+      </div>
+      <p class="app-dialog__message" id="appDialogMessage">Operacion completada.</p>
+      <div class="app-dialog__actions">
+        <button type="button" class="app-dialog__button" id="appDialogClose">Aceptar</button>
+      </div>
+    </section>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
