@@ -1,11 +1,22 @@
 <?php
 declare(strict_types=1);
 
-// Credenciales de la BD
-define('DB_HOST', 'localhost');
-define('DB_NAME', 'clubemprende');
-define('DB_USER', 'clubemprende');
-define('DB_PASS', 'wowi5idire6iPruy53');
+// true = Producción, false = Desarrollo local (XAMPP)
+define('IS_PRODUCTION', true); 
+
+if (IS_PRODUCTION) {
+    // Credenciales de Producción
+    define('DB_HOST', 'localhost');
+    define('DB_NAME', 'clubemprende');
+    define('DB_USER', 'clubemprende');
+    define('DB_PASS', 'wowi5idire6iPruy53');
+} else {
+    // Credenciales de Desarrollo Local
+    define('DB_HOST', 'localhost');
+    define('DB_NAME', 'retomarte');
+    define('DB_USER', 'root');
+    define('DB_PASS', '');
+}
 
 // Prefijo de las tablas
 define('DB_PREFIX', 'rm_');

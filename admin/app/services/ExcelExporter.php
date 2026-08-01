@@ -5,11 +5,21 @@ class AdminExcelExporter
 {
     public static function downloadParticipants(array $rows, array $filters = [], string $filename = 'rm_participantes.xlsx'): never
     {
+        $allUnach = count($rows) > 0;
+        foreach ($rows as $row) {
+            if (strtolower((string) ($row['institution'] ?? '')) !== 'unach') {
+                $allUnach = false;
+                break;
+            }
+        }
+        $isUnachExport = $allUnach || strtolower((string) ($filters['institution'] ?? '')) === 'unach';
+
         $headers = [
             'ID',
             'Fecha de registro',
             'Estatus',
             'Institucion',
+            'Rol',
             'Unidad / Plantel',
             'Semestre',
             'Carrera / Area',
@@ -24,23 +34,18 @@ class AdminExcelExporter
             'Numero de telefono celular',
             'Estado',
             'Municipio',
-            'Carta responsiva',
-            'Certificado de estudios',
         ];
 
-        $allUnach = count($rows) > 0;
-        foreach ($rows as $row) {
-            if (strtolower((string) ($row['institution'] ?? '')) !== 'unach') {
-                $allUnach = false;
-                break;
-            }
+        if (!$isUnachExport) {
+            $headers[] = 'Carta responsiva';
+            $headers[] = 'Certificado de estudios';
         }
-        $isUnachExport = $allUnach || strtolower((string) ($filters['institution'] ?? '')) === 'unach';
 
-        if ($isUnachExport) {
-            array_pop($headers); // Quita Certificado de estudios
-            array_pop($headers); // Quita Carta responsiva
-        }
+        // Columnas específicas de docentes
+        $headers[] = '¿Pertenece al SNII?';
+        $headers[] = '¿Pertenece al SEI?';
+        $headers[] = '¿Pertenece al Club Empren-D?';
+        $headers[] = '¿Ha participado en Wadhwani?';
 
         $sheetRows = [
             ['Reporte de participantes - Reto Marte'],
@@ -51,9 +56,20 @@ class AdminExcelExporter
 
         foreach ($rows as $row) {
             $isUnach = strtolower((string) ($row['institution'] ?? '')) === 'unach';
+            $isTeacher = (int)($row['submission_is_teacher'] ?? ($row['is_teacher'] ?? 0)) === 1;
+
             $unitOrCampus = $isUnach ? (string) ($row['submission_unach_unit'] ?? $row['location_label'] ?? '') : (string) ($row['submission_cobach_campus'] ?? $row['location_label'] ?? '');
+            
             $program = $isUnach ? (string) ($row['submission_unach_major'] ?? $row['program_label'] ?? '') : (string) ($row['submission_cobach_area'] ?? $row['program_label'] ?? '');
+            if ($isUnach && $isTeacher) {
+                $program = 'N/A';
+            }
+            
             $semester = $isUnach ? (string) ($row['submission_unach_semester'] ?? $row['semester'] ?? '') : (string) ($row['submission_cobach_semester'] ?? $row['semester'] ?? '');
+            if ($isUnach && $isTeacher) {
+                $semester = 'N/A';
+            }
+
             $firstName = $isUnach ? (string) ($row['submission_unach_first_name'] ?? '') : (string) ($row['submission_cobach_first_name'] ?? '');
             $lastName1 = $isUnach ? (string) ($row['submission_unach_last_name_1'] ?? '') : (string) ($row['submission_cobach_last_name_1'] ?? '');
             $lastName2 = $isUnach ? (string) ($row['submission_unach_last_name_2'] ?? '') : (string) ($row['submission_cobach_last_name_2'] ?? '');
@@ -73,6 +89,7 @@ class AdminExcelExporter
                 self::displayDateTime((string) ($row['created_at'] ?? '')),
                 (string) ($row['current_status'] ?? 'Pendiente'),
                 strtoupper((string) ($row['institution'] ?? '')),
+                $isUnach ? ($isTeacher ? 'Docente' : 'Estudiante') : 'Estudiante',
                 $unitOrCampus,
                 $semester,
                 $program,
@@ -93,6 +110,12 @@ class AdminExcelExporter
                 $rowValues[] = $responsiva;
                 $rowValues[] = $certificado;
             }
+
+            // Datos de docente
+            $rowValues[] = $isTeacher ? (string)($row['submission_teacher_snii'] ?? ($row['teacher_snii'] ?? '-')) : '-';
+            $rowValues[] = $isTeacher ? (string)($row['submission_teacher_sei'] ?? ($row['teacher_sei'] ?? '-')) : '-';
+            $rowValues[] = $isTeacher ? (string)($row['submission_teacher_emprend'] ?? ($row['teacher_emprend'] ?? '-')) : '-';
+            $rowValues[] = $isTeacher ? (string)($row['submission_teacher_wadhwani'] ?? ($row['teacher_wadhwani'] ?? '-')) : '-';
 
             $sheetRows[] = $rowValues;
         }
@@ -202,7 +225,8 @@ class AdminExcelExporter
     private static function columnWidths(int $count): array
     {
         $widths = [
-            10, 22, 18, 15, 32, 12, 30, 22, 22, 22, 18, 8, 14, 20, 26, 18, 20, 20, 38, 38,
+            10, 22, 18, 15, 15, 32, 12, 30, 22, 22, 22, 18, 8, 14, 20, 26, 18, 20, 20, 38, 38,
+            15, 15, 15, 15, 15, 15, 15, 15, 15, 15
         ];
         return array_slice($widths, 0, $count);
     }

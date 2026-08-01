@@ -26,6 +26,7 @@ class BackofficeController
             'q' => trim((string) ($_GET['q'] ?? '')),
             'institution' => trim((string) ($_GET['institution'] ?? '')),
             'status' => trim((string) ($_GET['status'] ?? '')),
+            'role' => trim((string) ($_GET['role'] ?? '')),
             'date_from' => trim((string) ($_GET['date_from'] ?? '')),
             'date_to' => trim((string) ($_GET['date_to'] ?? '')),
             'faculty' => trim((string) ($_GET['faculty'] ?? '')),
@@ -120,6 +121,9 @@ class BackofficeController
             admin_redirect('participants');
         }
 
+        $this->model->findSubmission($participantId);
+        $this->model->getDocuments($participantId);
+        $this->model->getObservationsHistory($participantId);
         admin_render('participants/show', [
             'pageTitle' => 'Detalle del participante',
             'route' => 'participants',
@@ -148,6 +152,7 @@ class BackofficeController
             'q' => trim((string) ($_GET['q'] ?? '')),
             'institution' => trim((string) ($_GET['institution'] ?? '')),
             'status' => trim((string) ($_GET['status'] ?? '')),
+            'role' => trim((string) ($_GET['role'] ?? '')),
             'date_from' => trim((string) ($_GET['date_from'] ?? '')),
             'date_to' => trim((string) ($_GET['date_to'] ?? '')),
             'faculty' => trim((string) ($_GET['faculty'] ?? '')),

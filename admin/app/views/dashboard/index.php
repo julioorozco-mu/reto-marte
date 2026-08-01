@@ -62,13 +62,15 @@
     </div>
   </div>
 
-  <section class="stats-grid" style="margin-bottom: 0;">
+  <section class="stats-grid" style="margin-bottom: 0; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));">
     <?php
       $cards = [
         ['Total de participantes', $stats['total_participants'] ?? 0],
         ['Participantes UNACH', $stats['unach_participants'] ?? 0],
+        ['Estudiantes UNACH', $stats['unach_students'] ?? 0],
+        ['Docentes UNACH', $stats['unach_teachers'] ?? 0],
         ['Participantes COBACH', $stats['cobach_participants'] ?? 0],
-        ['Registros del dia', $stats['today_participants'] ?? 0],
+        ['Registros del día', $stats['today_participants'] ?? 0],
         ['Registros de la semana', $stats['week_participants'] ?? 0],
         ['Pendientes', $stats['pending_participants'] ?? 0],
         ['Validados', $stats['validated_participants'] ?? 0],

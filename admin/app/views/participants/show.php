@@ -6,23 +6,47 @@ foreach ($documents as $doc) {
 
 $formData = is_array($submission ?? null) ? $submission : $participant;
 
+$isTeacher = (int)($formData['is_teacher'] ?? ($participant['is_teacher'] ?? 0)) === 1;
+
 $orderedResponses = $participant['institution'] === 'unach'
-  ? [
-    'Unidad academica' => $formData['unach_unit'] ?? ($participant['unach_unit'] ?? ''),
-    'Semestre' => $formData['unach_semester'] ?? ($participant['semester'] ?? ''),
-    'Carrera' => $formData['unach_major'] ?? ($participant['unach_major'] ?? ''),
-    'Nombre(s)' => $formData['unach_first_name'] ?? ($participant['first_name'] ?? ''),
-    'Apellido paterno' => $formData['unach_last_name_1'] ?? ($participant['last_name_paternal'] ?? ''),
-    'Apellido materno' => $formData['unach_last_name_2'] ?? ($participant['last_name_maternal'] ?? ''),
-    'Fecha de nacimiento' => $formData['unach_birthdate'] ?? ($participant['birthdate'] ?? ''),
-    'Edad' => (string)($formData['unach_age'] ?? ($participant['age'] ?? '')),
-    'Sexo' => $formData['unach_gender'] ?? ($participant['gender'] ?? ''),
-    'CURP' => $formData['unach_curp'] ?? ($participant['curp'] ?? ''),
-    'Correo electronico' => $formData['unach_email'] ?? ($participant['email'] ?? ''),
-    'Numero de telefono celular' => $formData['unach_phone'] ?? ($participant['phone'] ?? ''),
-    'Estado' => $formData['unach_state'] ?? ($participant['state_name'] ?? ''),
-    'Municipio' => $formData['unach_city'] ?? ($participant['city_name'] ?? ''),
-  ]
+  ? ($isTeacher
+    ? [
+        'Rol' => 'Docente',
+        'Unidad academica' => $formData['unach_unit'] ?? ($participant['unach_unit'] ?? ''),
+        'Nombre(s)' => $formData['unach_first_name'] ?? ($participant['first_name'] ?? ''),
+        'Apellido paterno' => $formData['unach_last_name_1'] ?? ($participant['last_name_paternal'] ?? ''),
+        'Apellido materno' => $formData['unach_last_name_2'] ?? ($participant['last_name_maternal'] ?? ''),
+        'Fecha de nacimiento' => $formData['unach_birthdate'] ?? ($participant['birthdate'] ?? ''),
+        'Edad' => (string)($formData['unach_age'] ?? ($participant['age'] ?? '')),
+        'Sexo' => $formData['unach_gender'] ?? ($participant['gender'] ?? ''),
+        'CURP' => $formData['unach_curp'] ?? ($participant['curp'] ?? ''),
+        'Correo electronico' => $formData['unach_email'] ?? ($participant['email'] ?? ''),
+        'Numero de telefono celular' => $formData['unach_phone'] ?? ($participant['phone'] ?? ''),
+        'Estado' => $formData['unach_state'] ?? ($participant['state_name'] ?? ''),
+        'Municipio' => $formData['unach_city'] ?? ($participant['city_name'] ?? ''),
+        '¿Pertenece al SNII?' => $formData['teacher_snii'] ?? ($participant['teacher_snii'] ?? '-'),
+        '¿Pertenece al SEI?' => $formData['teacher_sei'] ?? ($participant['teacher_sei'] ?? '-'),
+        '¿Pertenece al Club Empren-D UNACH?' => $formData['teacher_emprend'] ?? ($participant['teacher_emprend'] ?? '-'),
+        '¿Ha participado en el programa Wadhwani?' => $formData['teacher_wadhwani'] ?? ($participant['teacher_wadhwani'] ?? '-'),
+      ]
+    : [
+        'Rol' => 'Estudiante',
+        'Unidad academica' => $formData['unach_unit'] ?? ($participant['unach_unit'] ?? ''),
+        'Semestre' => $formData['unach_semester'] ?? ($participant['semester'] ?? ''),
+        'Carrera' => $formData['unach_major'] ?? ($participant['unach_major'] ?? ''),
+        'Nombre(s)' => $formData['unach_first_name'] ?? ($participant['first_name'] ?? ''),
+        'Apellido paterno' => $formData['unach_last_name_1'] ?? ($participant['last_name_paternal'] ?? ''),
+        'Apellido materno' => $formData['unach_last_name_2'] ?? ($participant['last_name_maternal'] ?? ''),
+        'Fecha de nacimiento' => $formData['unach_birthdate'] ?? ($participant['birthdate'] ?? ''),
+        'Edad' => (string)($formData['unach_age'] ?? ($participant['age'] ?? '')),
+        'Sexo' => $formData['unach_gender'] ?? ($participant['gender'] ?? ''),
+        'CURP' => $formData['unach_curp'] ?? ($participant['curp'] ?? ''),
+        'Correo electronico' => $formData['unach_email'] ?? ($participant['email'] ?? ''),
+        'Numero de telefono celular' => $formData['unach_phone'] ?? ($participant['phone'] ?? ''),
+        'Estado' => $formData['unach_state'] ?? ($participant['state_name'] ?? ''),
+        'Municipio' => $formData['unach_city'] ?? ($participant['city_name'] ?? ''),
+      ]
+  )
   : [
     'Plantel COBACH' => $formData['cobach_campus'] ?? ($participant['cobach_campus'] ?? ''),
     'Semestre' => $formData['cobach_semester'] ?? ($participant['semester'] ?? ''),

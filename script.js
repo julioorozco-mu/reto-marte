@@ -640,13 +640,13 @@ if (institutionForm) {
       const controls = Array.from(panel.querySelectorAll("input, select, textarea"));
 
       controls.forEach((control) => {
-        if (control.disabled || control.readOnly) {
+        if (control.disabled || control.readOnly || control.offsetParent === null) {
           control.required = false;
           return;
         }
 
         const type = (control.getAttribute("type") || "").toLowerCase();
-        if (type === "hidden") {
+        if (type === "hidden" || control.name.includes("last_name_2")) {
           control.required = false;
           return;
         }
@@ -678,6 +678,91 @@ if (institutionForm) {
       syncInstitutionPanel(card.dataset.institution || "");
     });
   });
+
+  const unachRoleRadios = document.querySelectorAll('input[name="unach_role"]');
+  const unachStudentFields = document.getElementById('unach_student_fields');
+  const unachTeacherFields = document.getElementById('unach_teacher_fields');
+  const unachFormTitle = document.getElementById('unach_form_title');
+  
+  unachRoleRadios.forEach((radio) => {
+    radio.addEventListener("change", (e) => {
+      const role = e.target.value;
+      if (role === 'estudiante') {
+        if (unachStudentFields) unachStudentFields.style.display = '';
+        if (unachTeacherFields) unachTeacherFields.style.display = 'none';
+        if (unachFormTitle) unachFormTitle.textContent = 'Datos para estudiantes de UNACH';
+      } else {
+        if (unachStudentFields) unachStudentFields.style.display = 'none';
+        if (unachTeacherFields) unachTeacherFields.style.display = '';
+        if (unachFormTitle) unachFormTitle.textContent = 'Datos para docentes de UNACH';
+      }
+      updateRequiredFields();
+    });
+  });
+
+  // Lógica de carga y filtrado dinámico de carreras de la UNACH
+  const unachUnitSelect = institutionForm.querySelector('select[name="unach_unit"]');
+  const unachMajorSelect = institutionForm.querySelector('select[name="unach_major"]');
+  let carrerasData = null;
+
+  async function loadCarreras() {
+    try {
+      const response = await fetch("carreras.json");
+      if (!response.ok) throw new Error("No se pudo cargar la lista de carreras");
+      const rawData = await response.json();
+      carrerasData = {};
+      // Normalizamos las llaves del JSON (reemplazar múltiples espacios por uno solo)
+      for (const key in rawData) {
+        const normalizedKey = key.replace(/\s+/g, " ").trim();
+        carrerasData[normalizedKey] = rawData[key];
+      }
+    } catch (error) {
+      console.error("Error cargando carreras:", error);
+    }
+  }
+
+  function updateUnachMajors() {
+    if (!unachMajorSelect) return;
+    
+    // Normalizamos el valor seleccionado (reemplazar múltiples espacios por uno solo)
+    const selectedUnitRaw = unachUnitSelect ? unachUnitSelect.value.trim() : "";
+    const selectedUnit = selectedUnitRaw.replace(/\s+/g, " ");
+    
+    // Limpiamos
+    unachMajorSelect.innerHTML = "";
+    
+    if (!selectedUnit || !carrerasData || !carrerasData[selectedUnit]) {
+      const opt = document.createElement("option");
+      opt.value = "";
+      opt.textContent = "Selecciona primero una unidad académica";
+      unachMajorSelect.appendChild(opt);
+      unachMajorSelect.disabled = true;
+      return;
+    }
+    
+    // Habilitamos y agregamos opción por defecto
+    unachMajorSelect.disabled = false;
+    const defaultOpt = document.createElement("option");
+    defaultOpt.value = "";
+    defaultOpt.textContent = "Selecciona tu carrera";
+    unachMajorSelect.appendChild(defaultOpt);
+    
+    // Inyectamos las carreras correspondientes
+    carrerasData[selectedUnit].forEach((carrera) => {
+      const opt = document.createElement("option");
+      opt.value = carrera;
+      opt.textContent = carrera;
+      unachMajorSelect.appendChild(opt);
+    });
+  }
+
+  // Cargamos el JSON
+  loadCarreras();
+
+  // Escuchamos el cambio de unidad académica
+  if (unachUnitSelect) {
+    unachUnitSelect.addEventListener("change", updateUnachMajors);
+  }
 
   uploadRules.forEach((rule) => {
     rule.input?.addEventListener("change", () => {

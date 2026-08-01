@@ -26,6 +26,13 @@ $sortToggle = static function (string $column) use ($sort, $dir, $queryBase): st
         <option value="cobach" <?= ($filters['institution'] ?? '') === 'cobach' ? 'selected' : '' ?>>COBACH</option>
       </select>
     </label>
+    <label><span>Rol</span>
+      <select name="role">
+        <option value="">Todos</option>
+        <option value="estudiante" <?= ($filters['role'] ?? '') === 'estudiante' ? 'selected' : '' ?>>Estudiante</option>
+        <option value="docente" <?= ($filters['role'] ?? '') === 'docente' ? 'selected' : '' ?>>Docente</option>
+      </select>
+    </label>
     <label><span>Estatus</span>
       <select name="status">
         <option value="">Todos</option>
@@ -58,6 +65,7 @@ $sortToggle = static function (string $column) use ($sort, $dir, $queryBase): st
           <th><a href="<?= $sortToggle('date') ?>">Fecha</a></th>
           <th><a href="<?= $sortToggle('name') ?>">Nombre completo</a></th>
           <th><a href="<?= $sortToggle('institution') ?>">Institucion</a></th>
+          <th>Rol</th>
           <th><a href="<?= $sortToggle('place') ?>">Facultad o Plantel</a></th>
           <th><a href="<?= $sortToggle('program') ?>">Carrera o Area</a></th>
           <th><a href="<?= $sortToggle('semester') ?>">Semestre</a></th>
@@ -71,7 +79,7 @@ $sortToggle = static function (string $column) use ($sort, $dir, $queryBase): st
       </thead>
       <tbody>
         <?php if (empty($rows)): ?>
-          <tr><td colspan="13" class="empty-row">No hay registros con los filtros actuales.</td></tr>
+          <tr><td colspan="14" class="empty-row">No hay registros con los filtros actuales.</td></tr>
         <?php else: ?>
           <?php foreach ($rows as $row): ?>
             <tr>
@@ -79,6 +87,7 @@ $sortToggle = static function (string $column) use ($sort, $dir, $queryBase): st
               <td><?= admin_h(admin_format_date($row['created_at'])) ?></td>
               <td><?= admin_h($row['full_name']) ?></td>
               <td><span class="pill <?= admin_h($row['institution']) ?>"><?= admin_h(strtoupper($row['institution'])) ?></span></td>
+              <td><span class="pill <?= (int)($row['is_teacher'] ?? 0) === 1 ? 'teacher' : 'student' ?>"><?= (int)($row['is_teacher'] ?? 0) === 1 ? 'DOCENTE' : 'ESTUDIANTE' ?></span></td>
               <td><?= admin_h($row['location_label'] ?: '-') ?></td>
               <td><?= admin_h($row['program_label'] ?: '-') ?></td>
               <td><?= admin_h($row['semester'] ?: '-') ?></td>

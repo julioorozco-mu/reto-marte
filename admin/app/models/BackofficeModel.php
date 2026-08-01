@@ -94,6 +94,14 @@ class BackofficeModel
             $where[] = "(p.first_name LIKE {$q} OR p.last_name_paternal LIKE {$q} OR p.last_name_maternal LIKE {$q} OR p.email LIKE {$q} OR p.phone LIKE {$q} OR p.curp LIKE {$q})";
         }
 
+        if (isset($filters['role']) && $filters['role'] !== '') {
+            if ($filters['role'] === 'docente') {
+                $where[] = 'p.is_teacher = 1';
+            } elseif ($filters['role'] === 'estudiante') {
+                $where[] = 'p.is_teacher = 0';
+            }
+        }
+
         if (!empty($filters['institution'])) {
             $where[] = 'p.institution = ' . $this->pdo->quote($filters['institution']);
         }
@@ -127,6 +135,8 @@ class BackofficeModel
         $sql = "SELECT
             (SELECT COUNT(*) FROM rm_participants) AS total_participants,
             (SELECT COUNT(*) FROM rm_participants WHERE institution = 'unach') AS unach_participants,
+            (SELECT COUNT(*) FROM rm_participants WHERE institution = 'unach' AND is_teacher = 0) AS unach_students,
+            (SELECT COUNT(*) FROM rm_participants WHERE institution = 'unach' AND is_teacher = 1) AS unach_teachers,
             (SELECT COUNT(*) FROM rm_participants WHERE institution = 'cobach') AS cobach_participants,
             (SELECT COUNT(*) FROM rm_participants WHERE DATE(created_at) = CURDATE()) AS today_participants,
             (SELECT COUNT(*) FROM rm_participants WHERE created_at >= DATE_SUB(CURDATE(), INTERVAL 6 DAY)) AS week_participants,
@@ -166,9 +176,10 @@ class BackofficeModel
             p.created_at,
             CONCAT_WS(' ', p.first_name, p.last_name_paternal, p.last_name_maternal) AS full_name,
             p.institution,
+            p.is_teacher,
             CASE WHEN p.institution = 'unach' THEN p.unach_unit ELSE p.cobach_campus END AS location_label,
-            CASE WHEN p.institution = 'unach' THEN p.unach_major ELSE p.cobach_area END AS program_label,
-            p.semester,
+            CASE WHEN p.is_teacher = 1 THEN 'N/A' WHEN p.institution = 'unach' THEN p.unach_major ELSE p.cobach_area END AS program_label,
+            CASE WHEN p.is_teacher = 1 THEN 'N/A' ELSE p.semester END AS semester,
             p.gender,
             p.state_name,
             p.city_name,
@@ -400,6 +411,12 @@ class BackofficeModel
         $submissionCobachResponsiva = $submissionReady ? 'COALESCE(s.cobach_responsiva_path, p.responsiva_file_path)' : 'p.responsiva_file_path';
         $submissionCobachCertificado = $submissionReady ? 'COALESCE(s.cobach_certificado_path, p.certificado_file_path)' : 'p.certificado_file_path';
 
+        $submissionTeacherSnii = $submissionReady ? 'COALESCE(s.teacher_snii, p.teacher_snii)' : 'p.teacher_snii';
+        $submissionTeacherSei = $submissionReady ? 'COALESCE(s.teacher_sei, p.teacher_sei)' : 'p.teacher_sei';
+        $submissionTeacherEmprend = $submissionReady ? 'COALESCE(s.teacher_emprend, p.teacher_emprend)' : 'p.teacher_emprend';
+        $submissionTeacherWadhwani = $submissionReady ? 'COALESCE(s.teacher_wadhwani, p.teacher_wadhwani)' : 'p.teacher_wadhwani';
+        $submissionIsTeacher = $submissionReady ? 'COALESCE(s.is_teacher, p.is_teacher)' : 'p.is_teacher';
+
         $sql = "SELECT
             p.rm_participant_id AS id,
             p.created_at,
@@ -423,6 +440,16 @@ class BackofficeModel
             p.cobach_area,
             p.responsiva_file_path,
             p.certificado_file_path,
+            p.is_teacher,
+            p.teacher_snii,
+            p.teacher_sei,
+            p.teacher_emprend,
+            p.teacher_wadhwani,
+            {$submissionIsTeacher} AS submission_is_teacher,
+            {$submissionTeacherSnii} AS submission_teacher_snii,
+            {$submissionTeacherSei} AS submission_teacher_sei,
+            {$submissionTeacherEmprend} AS submission_teacher_emprend,
+            {$submissionTeacherWadhwani} AS submission_teacher_wadhwani,
             {$submissionUnachUnit} AS submission_unach_unit,
             {$submissionUnachSemester} AS submission_unach_semester,
             {$submissionUnachMajor} AS submission_unach_major,
