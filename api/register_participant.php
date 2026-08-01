@@ -310,6 +310,7 @@ SQL;
     rm_add_column_if_not_exists($pdo, $prefix . 'participants', 'teacher_sei', 'VARCHAR(2) NULL');
     rm_add_column_if_not_exists($pdo, $prefix . 'participants', 'teacher_emprend', 'VARCHAR(2) NULL');
     rm_add_column_if_not_exists($pdo, $prefix . 'participants', 'teacher_wadhwani', 'VARCHAR(2) NULL');
+    rm_add_column_if_not_exists($pdo, $prefix . 'participants', 'certificado_file_path', 'VARCHAR(255) NULL');
 }
 
 function rm_ensure_submission_schema(PDO $pdo): void
