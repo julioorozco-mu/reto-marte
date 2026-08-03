@@ -2,7 +2,7 @@
 declare(strict_types=1);
 
 // true = Producción, false = Desarrollo local (XAMPP)
-define('IS_PRODUCTION', true); 
+define('IS_PRODUCTION', false); 
 
 if (IS_PRODUCTION) {
     // Credenciales de Producción

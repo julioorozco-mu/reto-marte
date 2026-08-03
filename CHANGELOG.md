@@ -4,6 +4,15 @@ Este archivo detalla las modificaciones y adiciones técnicas realizadas en el p
 
 ---
 
+## [1.1.1] - 2026-08-03
+
+### Mapeo de Carreras y Unidades Académicas
+- **Actualización de Catálogo Oficial**:
+  - Se sincronizó el archivo `carreras.json` con la información oficial del Excel `carreras.xlsx` respetando codificación UTF-8 con acentos.
+  - Se depuraron y ajustaron las licenciaturas para las 27 unidades académicas oficiales de la UNACH.
+
+---
+
 ## [1.1.0] - 2026-08-01
 
 ### Formulario de Registro (Frontend)
