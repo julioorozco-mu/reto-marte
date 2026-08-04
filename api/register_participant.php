@@ -350,6 +350,7 @@ CREATE TABLE IF NOT EXISTS {$prefix}participant_submissions (
   cobach_state VARCHAR(120) NULL,
   cobach_city VARCHAR(120) NULL,
   cobach_responsiva_path VARCHAR(255) NULL,
+  cobach_certificado_path VARCHAR(255) NULL,
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (rm_submission_id),
@@ -361,6 +362,7 @@ SQL;
 
     $pdo->exec($sql);
     
+    rm_add_column_if_not_exists($pdo, $prefix . 'participant_submissions', 'cobach_certificado_path', 'VARCHAR(255) NULL');
     rm_add_column_if_not_exists($pdo, $prefix . 'participant_submissions', 'is_teacher', 'TINYINT(1) NOT NULL DEFAULT 0');
     rm_add_column_if_not_exists($pdo, $prefix . 'participant_submissions', 'teacher_snii', 'VARCHAR(2) NULL');
     rm_add_column_if_not_exists($pdo, $prefix . 'participant_submissions', 'teacher_sei', 'VARCHAR(2) NULL');

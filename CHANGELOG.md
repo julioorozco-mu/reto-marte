@@ -4,6 +4,16 @@ Este archivo detalla las modificaciones y adiciones técnicas realizadas en el p
 
 ---
 
+## [1.1.2] - 2026-08-04
+
+### Corrección de Base de Datos y Reporte de Errores
+- **Soporte de Columna Faltante**:
+  - Se agregó la columna `cobach_certificado_path` en la creación de la tabla `rm_participant_submissions` y en su migración dinámica (`rm_add_column_if_not_exists`). Esto soluciona el fallo en producción al registrar alumnos de COBACH que subían su certificado de estudios.
+- **Mejora en Diagnóstico del Cliente**:
+  - Se modificó `script.js` para que ante una respuesta de error de la API (500), se visualice el detalle técnico (`result.error`) en el cuadro de diálogo. Esto previene quedar a ciegas ante problemas de base de datos o de red en producción.
+
+---
+
 ## [1.1.1] - 2026-08-03
 
 ### Mapeo de Carreras y Unidades Académicas

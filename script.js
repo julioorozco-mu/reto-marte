@@ -820,7 +820,8 @@ if (institutionForm) {
       }));
 
       if (!response.ok || !result.ok) {
-        showAppDialog(result.message || "No se pudo guardar tu registro.", { type: "error" });
+        const errorDetail = result.error ? `\n\nDetalle técnico: ${result.error}` : "";
+        showAppDialog((result.message || "No se pudo guardar tu registro.") + errorDetail, { type: "error" });
         return;
       }
 
