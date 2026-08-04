@@ -4,6 +4,15 @@ Este archivo detalla las modificaciones y adiciones técnicas realizadas en el p
 
 ---
 
+## [1.1.3] - 2026-08-04
+
+### Tolerancia a Fallos en Almacenamiento
+- **Manejador de Subida de Archivos Robustecido**:
+  - Se modificó `api/register_participant.php` para intentar usar la carpeta base `uploads/participants` si falla la creación de subcarpetas por año y mes en servidores de producción restrictivos.
+  - Se mejoró el mensaje de error con instrucciones claras para que el desarrollador/usuario cree manualmente la carpeta con los permisos de escritura necesarios (`777` o `775`).
+
+---
+
 ## [1.1.2] - 2026-08-04
 
 ### Corrección de Base de Datos y Reporte de Errores

@@ -77,8 +77,17 @@ function rm_store_uploaded_file(string $fieldName, string $prefix): string
     $relativeDir = 'uploads/participants/' . $year . '/' . $month;
     $absoluteDir = __DIR__ . '/../' . $relativeDir;
 
-    if (!is_dir($absoluteDir) && !mkdir($absoluteDir, 0775, true) && !is_dir($absoluteDir)) {
-        throw new RuntimeException('No se pudo crear el directorio de archivos.');
+    if (!is_dir($absoluteDir)) {
+        // Intentamos crear la carpeta de año/mes de forma recursiva
+        if (!@mkdir($absoluteDir, 0775, true) && !is_dir($absoluteDir)) {
+            // Si falla, intentamos usar y crear el directorio base uploads/participants/
+            $relativeDir = 'uploads/participants';
+            $absoluteDir = __DIR__ . '/../' . $relativeDir;
+            
+            if (!is_dir($absoluteDir) && !@mkdir($absoluteDir, 0775, true) && !is_dir($absoluteDir)) {
+                throw new RuntimeException('No se pudo crear el directorio de almacenamiento. Por favor, crea manualmente la carpeta "uploads/participants" en la raíz del proyecto en producción y asígnale permisos de escritura (777 o 775).');
+            }
+        }
     }
 
     $extension = strtolower(pathinfo((string)($file['name'] ?? 'archivo.bin'), PATHINFO_EXTENSION));
