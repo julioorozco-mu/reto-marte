@@ -9,6 +9,8 @@ Este archivo detalla las modificaciones y adiciones técnicas realizadas en el p
 ### Corrección de Base de Datos y Reporte de Errores
 - **Soporte de Columna Faltante**:
   - Se agregó la columna `cobach_certificado_path` en la creación de la tabla `rm_participant_submissions` y en su migración dinámica (`rm_add_column_if_not_exists`). Esto soluciona el fallo en producción al registrar alumnos de COBACH que subían su certificado de estudios.
+- **Detección Automática de Entorno**:
+  - Se modificó `config/database.php` para determinar automáticamente si la aplicación se ejecuta en Producción o en Desarrollo Local basándose en la cabecera `HTTP_HOST` y en la ruta de archivos de XAMPP para ejecuciones CLI. Esto elimina el riesgo de subir credenciales locales (`root` sin contraseña) al repositorio y provocar bloqueos en producción.
 - **Mejora en Diagnóstico del Cliente**:
   - Se modificó `script.js` para que ante una respuesta de error de la API (500), se visualice el detalle técnico (`result.error`) en el cuadro de diálogo. Esto previene quedar a ciegas ante problemas de base de datos o de red en producción.
 

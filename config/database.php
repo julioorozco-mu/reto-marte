@@ -1,8 +1,20 @@
 <?php
 declare(strict_types=1);
 
-// true = Producción, false = Desarrollo local (XAMPP)
-define('IS_PRODUCTION', false); 
+// Detección automática del entorno (Producción vs Desarrollo local)
+$isProduction = true;
+if (isset($_SERVER['HTTP_HOST'])) {
+    $host = $_SERVER['HTTP_HOST'];
+    if ($host === 'localhost' || $host === '127.0.0.1' || strpos($host, '192.168.') === 0 || strpos($host, '10.') === 0) {
+        $isProduction = false;
+    }
+} else {
+    // Si se ejecuta por consola (CLI), verificamos si estamos en la ruta de XAMPP
+    if (strpos(str_replace('\\', '/', __DIR__), '/xampp/') !== false) {
+        $isProduction = false;
+    }
+}
+define('IS_PRODUCTION', $isProduction); 
 
 if (IS_PRODUCTION) {
     // Credenciales de Producción
