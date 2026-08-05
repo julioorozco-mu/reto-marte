@@ -18,7 +18,7 @@ jobs:
           server: ${{ secrets.SFTP_HOST }}
           username: ${{ secrets.SFTP_USERNAME }}
           ssh_private_key: ${{ secrets.SFTP_SSH_KEY }}
-          port: 22
+          port: ${{ secrets.SFTP_PORT || 2222 }}
           local_path: './'
           remote_path: '/home/marcaunach/htdocs/retomarte/'
-          args: '-o ConnectTimeout=5 -o StrictHostKeyChecking=no'
+          args: '-o ConnectTimeout=30 -o StrictHostKeyChecking=no'
