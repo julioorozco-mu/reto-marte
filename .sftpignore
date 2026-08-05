@@ -1,8 +1,0 @@
-.git/
-.github/
-.gitignore
-CHANGELOG.md
-README.md
-tests/
-credentials-test.md
-*.ppk
