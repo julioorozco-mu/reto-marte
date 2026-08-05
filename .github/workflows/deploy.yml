@@ -1,0 +1,24 @@
+name: Despliegue Automático SFTP a CPanel
+
+on:
+  push:
+    branches:
+      - main # Cambia esto si tu rama principal se llama 'master'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar el código del repositorio
+        uses: actions/checkout@v4
+
+      - name: Sincronizar archivos vía SFTP
+        uses: wlixcc/SFTP-Deploy-Action@v1.2.4
+        with:
+          server: ${{ secrets.SFTP_HOST }}
+          username: ${{ secrets.SFTP_USERNAME }}
+          ssh_private_key: ${{ secrets.SFTP_SSH_KEY }}
+          port: 22
+          local_path: './'
+          remote_path: '/home/marcaunach/htdocs/retomarte/'
+          args: '-o ConnectTimeout=5 -o StrictHostKeyChecking=no'

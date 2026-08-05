@@ -3,3 +3,8 @@ start_chrome.bat
 tmp_export_*.xlsx
 uploads/*
 !uploads/.gitkeep
+
+# Agents and IDEs
+.agents
+.claude
+skills-lock.json

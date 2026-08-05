@@ -75,18 +75,26 @@ function rm_store_uploaded_file(string $fieldName, string $prefix): string
     $year = date('Y');
     $month = date('m');
     $relativeDir = 'uploads/participants/' . $year . '/' . $month;
-    $absoluteDir = __DIR__ . '/../' . $relativeDir;
+    $baseDir = dirname(__DIR__);
+    $absoluteDir = $baseDir . '/' . $relativeDir;
 
     if (!is_dir($absoluteDir)) {
         // Intentamos crear la carpeta de año/mes de forma recursiva
         if (!@mkdir($absoluteDir, 0775, true) && !is_dir($absoluteDir)) {
             // Si falla, intentamos usar y crear el directorio base uploads/participants/
             $relativeDir = 'uploads/participants';
-            $absoluteDir = __DIR__ . '/../' . $relativeDir;
+            $absoluteDir = $baseDir . '/' . $relativeDir;
             
             if (!is_dir($absoluteDir) && !@mkdir($absoluteDir, 0775, true) && !is_dir($absoluteDir)) {
                 throw new RuntimeException('No se pudo crear el directorio de almacenamiento. Por favor, crea manualmente la carpeta "uploads/participants" en la raíz del proyecto en producción y asígnale permisos de escritura (777 o 775).');
             }
+        }
+    }
+
+    if (!is_writable($absoluteDir)) {
+        @chmod($absoluteDir, 0777);
+        if (!is_writable($absoluteDir)) {
+            throw new RuntimeException('La carpeta "' . $relativeDir . '" existe pero no tiene permisos de escritura. Por favor, ingresa por SFTP y asígnale permisos 777 o 775 a esa carpeta.');
         }
     }
 
@@ -101,7 +109,9 @@ function rm_store_uploaded_file(string $fieldName, string $prefix): string
 
     $tmpName = (string)($file['tmp_name'] ?? '');
     if (!move_uploaded_file($tmpName, $absolutePath)) {
-        throw new RuntimeException('No se pudo guardar el archivo en el servidor.');
+        $error = error_get_last();
+        $errorDetail = $error ? $error['message'] : 'Desconocido';
+        throw new RuntimeException('No se pudo guardar el archivo en el servidor. Detalle técnico: ' . $errorDetail);
     }
 
     return $relativeDir . '/' . $fileName;
